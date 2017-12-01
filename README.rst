@@ -1,4 +1,4 @@
-CraftBeerPi
+CraftBeerPiOS
 ===============
 
 A `Raspberry Pi <http://www.raspberrypi.org/>`_ distribution to to run `CraftBeerPi : The Raspberry PI base Home Brewing Software <https://github.com/Manuel83/craftbeerpi>`_ out of the box and the scripts necessary to load it at boot. This repository contains the source script to generate the distribution out of an existing `Raspbian <http://www.raspbian.org/>`_ distro image. `You can download a built image here <http://unofficialpi.org/Distros/CraftBeerPiOS>`_
