@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# CraftBeerpi Install script
+# Installs CraftBeerPi
+# Written by Guy Sheffer <guysoft at gmail dot com>
+# GPL V3
+########
+
+# Source error handling, leave this in place
+source /common.sh
+install_cleanup_trap
+
+unpack /filesystem/home/pi /home/pi pi
+unpack /filesystem/home/root /root root
+unpack /filesystem/boot /boot
+
+apt-get update
+apt-get -y install git
+
+pushd /home/pi
+    gitclone CRAFTBEERPIOS_REPO CraftBeerPi
+    pushd CraftBeerPi
+        # patch -p1 < /home/pi/craft_brew_pi.patch
+        yes | ./install.sh
+    popd
+popd
+
+# Unpack root at the end, so files are modified before
+unpack /filesystem/root /

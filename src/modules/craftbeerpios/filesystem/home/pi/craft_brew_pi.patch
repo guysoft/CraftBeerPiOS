@@ -1,0 +1,112 @@
+From 12e998397648034a114cb2fc02a6e71f5cb5071f Mon Sep 17 00:00:00 2001
+From: Guy Sheffer <guysoft@gmail.com>
+Date: Thu, 12 Oct 2017 17:00:11 +0000
+Subject: [PATCH 1/1] Add initial SC2262 code, all stuff is hardcoded and
+ breaks GPIO module
+
+---
+ brewapp/base/devices/gpio.py   | 13 +++++++----
+ brewapp/base/devices/heater.py | 49 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 4 deletions(-)
+ create mode 100644 brewapp/base/devices/heater.py
+
+diff --git a/brewapp/base/devices/gpio.py b/brewapp/base/devices/gpio.py
+index e9817bc..87ec7df 100644
+--- a/brewapp/base/devices/gpio.py
++++ b/brewapp/base/devices/gpio.py
+@@ -1,6 +1,7 @@
+ from brewapp import app
+ from brewapp.base.actor import ActorBase
+ from brewapp.base.model import *
++import heater
+ 
+ try:
+     import RPi.GPIO as GPIO
+@@ -75,10 +76,12 @@ class BrewGPIO(ActorBase):
+ 
+             if self.getConfigValue(device, "inverted", False) :
+                 app.logger.warning("SWITCH ON - Inverted")
+-                GPIO.output(gpio, 0)
++                # GPIO.output(gpio, 0)
++                heater.off()
+             else:
+                 app.logger.warning("SWITCH ON - Not Inverted")
+-                GPIO.output(gpio, 1)
++                # GPIO.output(gpio, 1)
++                heater.on()
+             pass
+         else:
+             app.logger.warning("GPIO TEST MODE ACTIVE. GPIO is not switched on" + str(device))
+@@ -96,10 +99,12 @@ class BrewGPIO(ActorBase):
+ 
+             if(self.getConfigValue(device, "inverted", False)):
+                 app.logger.warning("SWITCH OFF - Inverted")
+-                GPIO.output(gpio, 1)
++                # GPIO.output(gpio, 1)
++                heater.on()
+             else:
+                 app.logger.warning("SWITCH OFF - Not Inverted")
+-                GPIO.output(gpio, 0)
++                # GPIO.output(gpio, 0)
++                heater.off()
+             pass
+         else:
+             app.logger.warning("GPIO TEST MODE ACTIVE. GPIO is not switched off" + str(device))
+diff --git a/brewapp/base/devices/heater.py b/brewapp/base/devices/heater.py
+new file mode 100644
+index 0000000..e6f3bb8
+--- /dev/null
++++ b/brewapp/base/devices/heater.py
+@@ -0,0 +1,49 @@
++#!/usr/bin/python
++import RPi.GPIO as GPIO
++import time
++
++ON_PIN = 23
++OFF_PIN = 24
++
++def switch(pin):  
++        """blinking function"""
++        GPIO.output(pin,GPIO.HIGH)
++        time.sleep(1)
++        GPIO.output(pin,GPIO.LOW)
++        return
++
++def on_pin(pin):
++    GPIO.output(pin,GPIO.HIGH)
++    return
++
++def off_pin(pin):
++    GPIO.output(pin,GPIO.LOW)
++    return
++
++def on():
++    switch(ON_PIN)
++
++def off():
++    switch(OFF_PIN)
++
++if __name__ == "__main__":
++    import sys
++    # to use Raspberry Pi board pin numbers
++    GPIO.setmode(GPIO.BCM)
++    # set up GPIO output channel
++    GPIO.setup(ON_PIN, GPIO.OUT)
++    GPIO.setup(OFF_PIN, GPIO.OUT)
++    if len(sys.argv) < 2:
++        print("Usage: sudo heater.py [on|off]")
++    if sys.argv[1] == "on":
++        switch(ON_PIN)
++    else:
++        switch(OFF_PIN)
++        
++    GPIO.cleanup()
++else:
++    print("starting heater")
++    GPIO.setmode(GPIO.BCM)
++    GPIO.setup(ON_PIN, GPIO.OUT)
++    GPIO.setup(OFF_PIN, GPIO.OUT)
++
+-- 
+2.11.0
+
