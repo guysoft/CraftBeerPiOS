@@ -22,6 +22,21 @@ pushd /home/pi
         # patch -p1 < /home/pi/craft_brew_pi.patch
         yes | ./install.sh
     popd
+    
+    
+    if [ "$CRAFTBEERPIOS_INCLUDE_TELEGRAM" == "yes" ]
+    then
+        apt-get install -y python3-pip
+        gitclone CRAFTBEERPIOS_TELEGRAM_REPO CraftBeerPiBot
+        pushd CraftBeerPiBot
+            pip3 install -r requirements.txt
+            pushd src
+                cp config.ini.example /boot/config.ini
+                sudo -u pi ln -s /boot/config.ini config.ini
+                ./add_startup_service.sh
+            popd
+        popd
+    fi
 popd
 
 # Unpack root at the end, so files are modified before
