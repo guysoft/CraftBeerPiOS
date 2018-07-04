@@ -7,6 +7,10 @@
 
 # Source error handling, leave this in place
 source /common.sh
+
+set -x
+set -e
+
 install_cleanup_trap
 
 unpack /filesystem/home/pi /home/pi pi
@@ -33,7 +37,7 @@ pushd /home/pi
             pushd src
                 cp config.ini.example /boot/config.ini
                 sudo -u pi ln -s /boot/config.ini config.ini
-                ./add_startup_service.sh
+                ./add_startup_service.sh || true
             popd
         popd
     fi
