@@ -19,6 +19,8 @@ unpack /filesystem/boot /boot
 
 apt-get update
 apt-get -y install git
+# Fix bug where requirement.txt for craftbeerpi does not install
+apt-get remove -y python-rpi.gpio
 
 pushd /home/pi
     gitclone CRAFTBEERPIOS_REPO CraftBeerPi
