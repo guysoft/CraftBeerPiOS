@@ -33,6 +33,7 @@ pushd /home/pi
     if [ "$CRAFTBEERPIOS_INCLUDE_TELEGRAM" == "yes" ]
     then
         apt-get install -y python3-pip
+	wget https://bootstrap.pypa.io/get-pip.py -O - | python3
         gitclone CRAFTBEERPIOS_TELEGRAM_REPO CraftBeerPiBot
         pushd CraftBeerPiBot
             pip3 install -r requirements.txt
