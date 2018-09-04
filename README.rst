@@ -6,7 +6,7 @@ A `Raspberry Pi <http://www.raspberrypi.org/>`_ distribution to to run `CraftBee
 Where to get it?
 ----------------
 
-Official mirror is `here <http://unofficialpi.org/Distros/CustomPiOS>`_
+Official mirror is `here <http://unofficialpi.org/Distros/CraftBeerPiOS/>`_
 
 
 How to use it?
