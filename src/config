@@ -1,4 +1,4 @@
 export DIST_NAME=CraftBeerPiOS
-export DIST_VERSION=0.2
+export DIST_VERSION=0.3.0
 export BASE_OVERRIDE_HOSTNAME=craftbeerpi
 export MODULES="base(network,mysql,disable-services(craftbeerpios))"
