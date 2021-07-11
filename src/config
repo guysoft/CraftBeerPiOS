@@ -2,3 +2,13 @@ export DIST_NAME=CraftBeerPiOS
 export DIST_VERSION=0.3.0
 export BASE_OVERRIDE_HOSTNAME=craftbeerpi
 export MODULES="base(network,mysql,disable-services(craftbeerpios))"
+
+# if set will enlarge root parition prior to build by provided size in MB
+export BASE_IMAGE_ENLARGEROOT=2000
+
+# if set will resize root partition on image after build to minimum size + 
+# provided size in MB
+export BASE_IMAGE_RESIZEROOT=200
+
+export USAGE_STATISTICS_URL=https://craftbeerpios-tracking.gnethomelinux.com
+
